@@ -31,4 +31,36 @@ class RandomPasswordGenerator:
             random.choice(self.symbols)
         ]
 
-        
+        # Fill the rest of the password length with random characters
+        password += random.choices(self.all_characters, k=length - 4)
+
+
+        # Shuffle the created password to ensure randomness
+        random.shuffle(password)
+
+
+        return ''.join(password)
+
+
+    def run(self):
+        """Run the password generator tool."""
+        while True:
+            try:
+                length = int(input("Enter desired password length (min 4): "))
+                password = self.generate_password(length)
+                print(f"Generated Password: {password}")
+            except ValueError as e:
+                print(e)
+
+
+            # Check if the user wants to generate another password
+            repeat = input("Do you want to generate another password? (yes/no): ").strip().lower()
+            if repeat != 'yes':
+                print("Exiting the password generator. Goodbye!")
+                break
+
+
+if __name__ == "__main__":
+    # Create an instance of RandomPasswordGenerator and run it
+    password_generator = RandomPasswordGenerator()
+    password_generator.run()
